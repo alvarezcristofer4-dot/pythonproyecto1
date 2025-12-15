@@ -2,7 +2,7 @@ import os
 from time import sleep
 """
 PROYECTO 1 : CRUD DE EMPRESAS
-NOMBRE: CRISTOFER ALVAREZ
+NOMBRE: CRISTOFER ALVAREZ QUISPE
 """
 
 dic_empresas = {
@@ -33,50 +33,50 @@ while(True):
         print(" " * 10 + "REGISTRAR EMPRESA")
         print("=" * ANCHO)
         
-        dni = input("Ingrese DNI: ")
-        nombre = input("Ingrese Nombre: ")
-        email = input("Ingrese Email: ")
-        dic_nuevo_EMPRESA = {
-            'nombre': nombre,
-            'email': email
+        ruc = input("Ingrese RUC: ")
+        razon_social = input("Ingrese Razón Social: ")
+        direccion = input("Ingrese Dirección: ")
+        dic_nuevo_empresa = {
+            'razon_social': razon_social,
+            'direccion': direccion,
         }
-        dic_EMPRESAs[dni] = dic_nuevo_EMPRESA
-        print("EMPRESA registrado existosamente")
+        dic_empresas[ruc] = dic_nuevo_empresa
+        print("Empresa registrado existosamente")
     elif opcion == 2:
         print("=" * ANCHO)
         print(" " * 10 + "MOSTRAR EMPRESA")
         print("=" * ANCHO)
-        for dni,info in dic_EMPRESAs.items():
-            print(f"DNI : {dni}")
-            print(f"Nombre : {info['nombre']}")
-            print(f"Email : {info['email']}")
-            print('*' * ANCHO)
+        for ruc,info in dic_empresas.items():
+            print(f"RUC : {ruc}")
+            print(f"RAZÓN SOCIAL : {info['razon_social']}")
+            print(f"DIRECCIÓN : {info['direccion']}")
+            print("-" * ANCHO)
     elif opcion == 3:
         print("=" * ANCHO)
-        print(" " * 10 + "ACTUALIZAR  EMPRESA")
+        print(" " * 10 + "ACTUALIZAR EMPRESA")
         print("=" * ANCHO)
-        dni = input("Ingrese DNI del EMPRESA a actualizar : ")
-        if dni in dic_EMPRESAs:
-            print(f"EMPRESA Encontrado : {dic_EMPRESAs[dni]['nombre']}")
-            nuevo_nombre = input(f"NUEVO NOMBRE({dic_EMPRESAs[dni]['nombre']}) : ")
-            nuevo_email = input(f"NUEVO EMAIL({dic_EMPRESAs[dni]['email']}) : ")
-            if nuevo_nombre:
-                dic_EMPRESAs[dni]['nombre'] = nuevo_nombre
-            if nuevo_email:
-                dic_EMPRESAs[dni]['email'] = nuevo_email
+        ruc = input("Ingrese RUC del empresa a actualizar : ")
+        if ruc in dic_empresas:
+            print(f"empresa encontrado : {dic_empresas[ruc]['razon_social']}")
+            nuevo_razon_social = input(f"NUEVO RAZÓN SOCIAL({dic_empresas[ruc]['razon_social']}) : ")
+            nuevo_direccion = input(f"NUEVO DIRECCION({dic_empresas[ruc]['direccion']}) : ")
+            if nuevo_razon_social:
+                dic_empresas[ruc]['razon_social'] = nuevo_razon_social
+            if nuevo_direccion:
+                dic_empresas[ruc]['direccion'] = nuevo_direccion
             print("EMPRESA ACTUALIZADO EXITOSAMENTE!!!")
         else:
-            print('No se econtro el EMPRESA para el DNI ingresado')
+            print('No se econtro el empresa para el RUC ingresado')
     elif opcion == 4:
         print("=" * ANCHO)
         print(" " * 10 + "ELIMINAR EMPRESA")
         print("=" * ANCHO)
-        dni = input("Ingrese DNI del EMPRESA a actualizar : ")
-        if dni in dic_EMPRESAs:
-            del dic_EMPRESAs[dni]
+        ruc = input("Ingrese RUC del empresa a actualizar : ")
+        if ruc in dic_empresas:
+            del dic_empresas[ruc]
             print('EMPRESA ELIMINADO EXITOSAMENTE')
         else:
-            print('No se econtro el EMPRESA para el DNI ingresado')
+            print('No se econtro el EMPRESA para el RUC ingresado')
     elif opcion == 5:
         print("=" * ANCHO)
         print(" " * 10 + "SALIENDO DEL PROGRAMA")
