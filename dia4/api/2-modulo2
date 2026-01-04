@@ -1,0 +1,64 @@
+import requests 
+from tabulate import tabulate
+import mysql.connector
+
+# URL de la nueva API
+URL = 'https://restcountries.com/v3.1/region/America'
+
+# Realizamos la solicitud GET
+response = requests.get(URL)
+
+if response.status_code == 200:
+    print('Conexión a la API exitosa')
+    data = response.json()
+    rows = []
+    
+    # Recorremos los países y extraemos la información deseada
+    for pais in data:
+        nombre = pais['name']['common']  
+        capital = pais.get('capital', ['No disponible'])[0] 
+        region = pais['region']
+        population = pais.get('population', 'No disponible')  
+        rows.append([nombre, capital, region, population])
+        
+    headers = ['Nombre', 'Capital', 'Región', 'Población']
+    print(tabulate(rows, headers, tablefmt='grid'))
+    
+    # Cargamos los datos en la base de datos
+    connection = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='root',
+    database='db_g6'
+    )
+        
+    if connection.is_connected():
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS paises (
+                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                nombre VARCHAR(255) NOT NULL,
+                capital VARCHAR(255),
+                region VARCHAR(255),
+                population INT
+            )
+            """
+        )
+            
+        # Insertamos los datos de los países en la base de datos
+        for pais in rows:
+            cursor.execute(
+                    """
+                    INSERT INTO paises (nombre, capital, region, population)
+                    VALUES (%s, %s, %s, %s)
+                    """,
+                    pais
+                )   
+        connection.commit()
+        connection.close()
+        print(f'Registros importados a la base de datos') 
+    else:
+        print('Error al conectarse a la base de datos')  
+else:
+    print(f'Error: {response.status_code}')
