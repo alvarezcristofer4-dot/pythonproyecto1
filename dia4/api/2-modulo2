@@ -5,7 +5,6 @@ import mysql.connector
 # URL de la nueva API
 URL = 'https://restcountries.com/v3.1/region/America'
 
-# Realizamos la solicitud GET
 response = requests.get(URL)
 
 if response.status_code == 200:
